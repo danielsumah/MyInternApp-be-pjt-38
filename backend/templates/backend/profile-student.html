@@ -122,17 +122,32 @@
 									<ul class="dropdown-menu" aria-labelledby="user_img_dropdown">
                     
                     {% if active_user_group == "student" %}
-                      <li><a class="dropdown-item" href="{% url 'student-profile-url' %}">Profile</a></li>
-					  <li>
-						<a class="dropdown-item" href="#">Publish</a>
-					</li>
+                      <li><a class="dropdown-item" href="{% url 'stu-profile' %}">Profile</a></li>
+				
                     {% else %}
-                    <li><a class="dropdown-item" href="{% url 'employer-profile-url' %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'emp-profile' %}">Profile</a></li>
                     {% endif %}
+					
+					
+					{% if active_user_group == "student" %}
+						<li>
+							<a class="dropdown-item" href="{% url 'student-upload-work-url' %}">Publish</a>
+						</li>
 
-					<li>
-						<a class="dropdown-item" href="{% url 'student-upload-work-url' %}">Publish</a>
-					</li>
+					{% else %}
+						<li>
+							<a class="dropdown-item" href="{% url 'upload-job-url' %}">Publish</a>
+						</li>
+					{% endif %}
+
+					{% if active_user_group == "student" %}
+                      <li><a class="dropdown-item" href="{% url 'student-profile-url' %}">Settings</a></li>
+				
+                    {% else %}
+                    <li><a class="dropdown-item" href="{% url 'employer-profile-url' %}">Settings</a></li>
+                    {% endif %}
+						
+					
 					<li>
 						<a class="dropdown-item" href="{% url 'logout-url' %}">Logout</a>
 					</li>
@@ -183,10 +198,10 @@
 							>
 								<img src="{% static 'backend/img/user-img.svg' %}" class="mb-3 user-image" alt="" />
 								<h5>
-									Tayo Kemi <i class="bi bi-check2-all text-tertiary"></i>
+									{{student_profile.student_reg_info.first_name}} {{student_profile.student_reg_info.last_name}} <i class="bi bi-check2-all text-tertiary"></i>
 								</h5>
 								<p class="mt-0">
-									Student. <span class="fw-bold">UNN, Nsukka</span>
+									Student. <span class="fw-bold">{{student_profile.student_reg_info.school}}</span>
 								</p>
 								<div class="col-12 d-flex justify-content-around">
 									<button class="btn px-2 contact-btn">
@@ -247,12 +262,7 @@
 									<img src="{% static 'backend/img/pen-cirlce.svg' %}" alt="" />
 								</div>
 								<p class="fw-light">
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-									do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-									Ut enim ad minim veniam, quis nostrud exercitation ullamco
-									laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-									irure dolor in reprehenderit in voluptate velit esse cillum
-									dolore eu fugiat nulla pariatur.
+									{{student_profile.about}}
 								</p>
 							</div>
 						</div>

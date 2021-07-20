@@ -212,16 +212,31 @@ def logout_view(request):
     logout(request)
     return redirect('login-url')
 
-#profile views
+# profile views
+
+
 def student_profile_view(request):
-    context = {}
+    user_email = request.user.email
+    # bring out uneitable details from regisration
+    user_reg_details = StudentRegistration.objects.get(email=user_email)
+    student_profile = StudentProfile.objects.get(
+        student_reg_info=user_reg_details)
+
+    active_user_group = str(request.user.groups.all()[0])
+    context = {
+        'active_user_group': active_user_group,
+        'student_profile': student_profile,
+    }
     return render(request, 'backend/profile-student.html', context)
-    
+
+
 def employer_profile_view(request):
     context = {}
     return render(request, 'backend/profile-employer.html', context)
 
 # Profile settings views
+
+
 def student_profile_settings_view(request):
     user_email = request.user.email
 

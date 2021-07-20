@@ -123,17 +123,32 @@
 									<ul class="dropdown-menu" aria-labelledby="user_img_dropdown">
                     
                     {% if active_user_group == "student" %}
-                      <li><a class="dropdown-item" href="{% url 'student-profile-url' %}">Profile</a></li>
-					  <li>
-						<a class="dropdown-item" href="#">Publish</a>
-					</li>
+                      <li><a class="dropdown-item" href="{% url 'stu-profile' %}">Profile</a></li>
+				
                     {% else %}
-                    <li><a class="dropdown-item" href="{% url 'employer-profile-url' %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'emp-profile' %}">Profile</a></li>
                     {% endif %}
+					
+					
+					{% if active_user_group == "student" %}
+						<li>
+							<a class="dropdown-item" href="{% url 'student-upload-work-url' %}">Publish</a>
+						</li>
 
-					<li>
-						<a class="dropdown-item" href="{% url 'student-upload-work-url' %}">Publish</a>
-					</li>
+					{% else %}
+						<li>
+							<a class="dropdown-item" href="{% url 'upload-job-url' %}">Publish</a>
+						</li>
+					{% endif %}
+
+					{% if active_user_group == "student" %}
+                      <li><a class="dropdown-item" href="{% url 'student-profile-url' %}">Settings</a></li>
+				
+                    {% else %}
+                    <li><a class="dropdown-item" href="{% url 'employer-profile-url' %}">Settings</a></li>
+                    {% endif %}
+						
+					
 					<li>
 						<a class="dropdown-item" href="{% url 'logout-url' %}">Logout</a>
 					</li>

@@ -50,9 +50,7 @@
 				<div class="collapse navbar-collapse" id="navbarText">
 					<div class="container pt-2 d-md-flex justify-content-around">
 						<div class="top-nav-search">
-							<form class="d-flex flex-column justify-content-center" method="POST">
-								{% csrf_token %}
-
+							<form class="d-flex flex-column justify-content-center">
 								<input
 									class="form-control ps-5"
 									type="search"
@@ -67,11 +65,12 @@
 						<ul class="navbar-nav mb-2 mb-lg-0 top-nav-item">
 							<li class="nav-item">
                 
-                {% if active_user_group == "student" %}
-                  <a class="nav-link active" aria-current="page" href="{% url 'student-homepage-url' %}">Home</a>
-                {% else %}
-                  <a class="nav-link active" aria-current="page" href="{% url 'employer-homepage-url' %}">Home</a>
-                {% endif %}
+								{% if active_user_group == "student" %}
+								<a class="nav-link active" aria-current="page" href="{% url 'student-homepage-url' %}">Home</a>
+		
+								{% elif active_user_group == "employer" %}
+								<a class="nav-link active" aria-current="page" href="{% url 'employer-homepage-url' %}">Home</a>
+								{% endif %}
 							</li>
 							<li class="nav-item dropdown">
 								<a
@@ -88,9 +87,9 @@
 									<li><a class="dropdown-item" href="{% url 'explore-student-url' %}">Students</a></li>
 									<li><a class="dropdown-item" href="{% url 'explore-job-url' %}">Jobs</a></li>
 									<li><hr class="dropdown-divider" /></li>
-									<li>
+									<!-- <li>
 										<a class="dropdown-item" href="#">More</a>
-									</li>
+									</li> -->
 								</ul>
 							</li>
 							<li class="nav-item">
@@ -124,17 +123,40 @@
 									<ul class="dropdown-menu" aria-labelledby="user_img_dropdown">
                     
                     {% if active_user_group == "student" %}
-                      <li><a class="dropdown-item" href="{% url 'student-profile-url' %}">Profile</a></li>
+                      <li><a class="dropdown-item" href="{% url 'stu-profile' %}">Profile</a></li>
+				
                     {% else %}
-                    <li><a class="dropdown-item" href="{% url 'employer-profile-url' %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'emp-profile' %}">Profile</a></li>
                     {% endif %}
-										<li>
-											<a class="dropdown-item" href="{% url 'logout-url' %}">Logout</a>
-										</li>
-										<!-- <li>
-											<a class="dropdown-item" href="#">Something else here</a>
-										</li> -->
-									</ul>
+					
+					
+					{% if active_user_group == "student" %}
+						<li>
+							<a class="dropdown-item" href="{% url 'student-upload-work-url' %}">Publish</a>
+						</li>
+
+					{% else %}
+						<li>
+							<a class="dropdown-item" href="{% url 'upload-job-url' %}">Publish</a>
+						</li>
+					{% endif %}
+
+					{% if active_user_group == "student" %}
+                      <li><a class="dropdown-item" href="{% url 'student-profile-url' %}">Settings</a></li>
+				
+                    {% else %}
+                    <li><a class="dropdown-item" href="{% url 'employer-profile-url' %}">Settings</a></li>
+                    {% endif %}
+						
+					
+					<li>
+						<a class="dropdown-item" href="{% url 'logout-url' %}">Logout</a>
+					</li>
+					
+					
+						
+					
+				</ul>
 								</div>
 							</li>
 						</ul>
