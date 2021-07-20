@@ -212,9 +212,17 @@ def logout_view(request):
     logout(request)
     return redirect('login-url')
 
-
-# Profile views
+#profile views
 def student_profile_view(request):
+    context = {}
+    return render(request, 'backend/profile-student.html', context)
+    
+def employer_profile_view(request):
+    context = {}
+    return render(request, 'backend/profile-employer.html', context)
+
+# Profile settings views
+def student_profile_settings_view(request):
     user_email = request.user.email
 
     # bring out uneitable details from regisration
@@ -240,7 +248,7 @@ def student_profile_view(request):
     return render(request, "backend/building-profile-student.html", context)
 
 
-def employer_profile_view(request):
+def employer_profile_settings_view(request):
     user_email = request.user.email
     employer_reg_details = EmployerRegistration.objects.get(email=user_email)
     employer_profile = EmployerProfile.objects.get(

@@ -1,0 +1,373 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+		/>
+		<link rel="stylesheet" href="{% static 'backend/css/main.css' %}" />
+		<link rel="stylesheet" href="{% static 'backend/css/profile.css' %}" />
+		<title>MyIntern</title>
+	</head>
+	<body>
+		<!-- T O P    N A V    S T A R T S   -->
+		<nav class="navbar navbar-expand-lg navbar-dark fixed-top top-bar">
+			<div class="container-fluid d-flex align-items-center">
+        
+        {% if active_user_group == "student" %}
+          <a class="navbar-brand" href="{% url 'student-homepage-url' %}">
+        {% else %}
+        <a class="navbar-brand" href="{% url 'employer-homepage-url' %}">
+        {% endif %}
+          
+				
+					<img src="{% static 'backend/img/logo-light.svg' %}" alt="" class="align-self-center" />
+
+					<span class="fw-bold fs-4">MyIntern</span>
+				</a>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarText"
+					aria-controls="navbarText"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarText">
+					<div class="container pt-2 d-md-flex justify-content-around">
+						<div class="top-nav-search">
+							<form class="d-flex flex-column justify-content-center">
+								<input
+									class="form-control ps-5"
+									type="search"
+									placeholder="Search"
+									aria-label="Search"
+								/>
+								<button class="btn top-nav-search-btn" type="submit">
+									<i class="bi bi-search text-muted"></i>
+								</button>
+							</form>
+						</div>
+						<ul class="navbar-nav mb-2 mb-lg-0 top-nav-item">
+							<li class="nav-item">
+                
+								{% if active_user_group == "student" %}
+								<a class="nav-link active" aria-current="page" href="{% url 'student-homepage-url' %}">Home</a>
+		
+								{% elif active_user_group == "employer" %}
+								<a class="nav-link active" aria-current="page" href="{% url 'employer-homepage-url' %}">Home</a>
+								{% endif %}
+							</li>
+							<li class="nav-item dropdown">
+								<a
+									class="nav-link dropdown-toggle text-light"
+									href="#"
+									id="navbarDropdown"
+									role="button"
+									data-bs-toggle="dropdown"
+									aria-expanded="false"
+								>
+									Explore
+								</a>
+								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<li><a class="dropdown-item" href="{% url 'explore-student-url' %}">Students</a></li>
+									<li><a class="dropdown-item" href="{% url 'explore-job-url' %}">Jobs</a></li>
+									<li><hr class="dropdown-divider" /></li>
+									<!-- <li>
+										<a class="dropdown-item" href="#">More</a>
+									</li> -->
+								</ul>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active" aria-current="page" href="#"
+									><img
+										src="{% static 'backend/img/top-bar-caret.svg' %}"
+										class="img-fluid fs-6"
+										alt=""
+								/></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active" aria-current="page" href="#"
+									><h4><i class="bi bi-bell-fill"></i></h4
+								></a>
+							</li>
+							<li class="nav-item">
+								<div class="dropdown">
+									<img
+                    {% if request.user.studentprofile.profile_pic.url %}
+                      src="{{ request.user.studentprofile.profile_pic.url }}"
+                    {% else %}
+                      src="{% static 'backend/img/user-img.svg' %}"
+                    {% endif %}
+										class="btn dropdown-toggle user-img-dropdown"
+										role="button"
+										id="user_img_dropdown"
+										data-bs-toggle="dropdown"
+										aria-expanded="false"
+										alt=""
+									/>
+									<ul class="dropdown-menu" aria-labelledby="user_img_dropdown">
+                    
+                    {% if active_user_group == "student" %}
+                      <li><a class="dropdown-item" href="{% url 'student-profile-url' %}">Profile</a></li>
+					  <li>
+						<a class="dropdown-item" href="#">Publish</a>
+					</li>
+                    {% else %}
+                    <li><a class="dropdown-item" href="{% url 'employer-profile-url' %}">Profile</a></li>
+                    {% endif %}
+
+					<li>
+						<a class="dropdown-item" href="{% url 'student-upload-work-url' %}">Publish</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="{% url 'logout-url' %}">Logout</a>
+					</li>
+					
+					
+						
+					
+				</ul>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<!-- T O P    N A V    E N D S -->
+		<!-- Main Content Starts -->
+		<section class="main-container">
+			<div class="container">
+				<div
+					class="alert alert-custom alert-dismissible fade show"
+					role="alert"
+				>
+					<strong
+						><i class="bi bi-exclamation-circle h3 text-warning me-4"></i
+					></strong>
+					To access all the features of MyIntern, you need to
+					<span class="text-tertiary">verify your details</span>
+					<button
+						type="button"
+						class="btn-close"
+						data-bs-dismiss="alert"
+						aria-label="Close"
+					></button>
+				</div>
+				<div class="row g-4">
+					<div class="col-md-3 me-md-5">
+						<div class="card">
+							<div
+								class="
+									d-flex
+									flex-column
+									align-items-center
+									justify-content-center
+									py-3
+									border border-bottom-secondary
+								"
+							>
+								<img src="{% static 'backend/img/user-img.svg' %}" class="mb-3 user-image" alt="" />
+								<h5>
+									Tayo Kemi <i class="bi bi-check2-all text-tertiary"></i>
+								</h5>
+								<p class="mt-0">
+									Student. <span class="fw-bold">UNN, Nsukka</span>
+								</p>
+								<div class="col-12 d-flex justify-content-around">
+									<button class="btn px-2 contact-btn">
+										<span
+											><img
+												src="{% static 'backend/img/dollar-light.svg' %}"
+												class="dollar-light"
+												alt=""
+										/></span>
+										Hire Me
+									</button>
+									<button
+										class="btn px-2 contact-btn"
+										data-bs-toggle="modal"
+										data-bs-target="#contact_student"
+									>
+										<i class="bi bi-chat"></i> Contact
+									</button>
+								</div>
+							</div>
+							<div class="p-3">
+								<div class="d-flex justify-content-between">
+									<p><i class="bi bi-star me-2"></i> Rating</p>
+									<i class="bi bi-caret-down-fill"></i>
+								</div>
+								<div class="d-flex justify-content-between">
+									<p><i class="bi bi-chat-left me-2"></i> Response time</p>
+									<i class="bi bi-caret-down-fill"></i>
+								</div>
+								<div class="d-flex justify-content-between">
+									<p>
+										<span
+											><img src="{% static 'backend/img/jobs-done.svg' %}" class="img-fluid" alt=""
+										/></span>
+										Projects done
+									</p>
+									<i class="bi bi-caret-down-fill"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div
+							class="
+								d-flex
+								blue-card
+								align-items-center
+								justify-content-center
+								mb-3
+							"
+						>
+							<h4 class="text-center text-light">MyIntern</h4>
+						</div>
+						<div class="card mb-3">
+							<div class="card-body">
+								<div class="d-flex justify-content-between">
+									<h5 class="card-title">About</h5>
+									<img src="{% static 'backend/img/pen-cirlce.svg' %}" alt="" />
+								</div>
+								<p class="fw-light">
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+									do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+									Ut enim ad minim veniam, quis nostrud exercitation ullamco
+									laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+									irure dolor in reprehenderit in voluptate velit esse cillum
+									dolore eu fugiat nulla pariatur.
+								</p>
+							</div>
+						</div>
+						<div class="card">
+							<div class="row">
+								<div
+									class="col-3 p-3 ps-4 d-flex align-items-center border-end"
+								>
+									<span class="fw-bold">My posts</span>
+								</div>
+								<div
+									class="
+										col-9
+										p-3
+										px-4
+										d-flex
+										justify-content-between
+										align-items-center
+									"
+								>
+									<span class="fw-bold text-muted">My posts</span>
+									<span class="fw-bold text-muted">My posts</span>
+									<span class="fw-bold text-muted">Reviews 0</span>
+								</div>
+							</div>
+						</div>
+						<p class="fw-bold text-center my-5">User has not posted any jobs</p>
+					</div>
+				</div>
+			</div>
+			<!-- Modal -->
+			<div
+				class="modal fade"
+				id="contact_student"
+				tabindex="-1"
+				aria-labelledby="exampleModalLabel"
+				aria-hidden="true"
+			>
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Message me</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+						<div class="modal-body">
+							<form
+								name="message_student"
+								id="message_student"
+								action=""
+								method="POST"
+							>
+								<div class="mb-3">
+									<label for="subject" class="form-label">Subject</label>
+									<input
+										type="text"
+										class="form-control"
+										name="subject"
+										id="subject"
+										placeholder="Type here...."
+									/>
+								</div>
+								<div class="mb-3">
+									<label for="message" class="form-label">Message</label>
+									<textarea
+										class="form-control"
+										name="message"
+										id="message"
+										rows="4"
+										placeholder="Type here...."
+									></textarea>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-send">Send message</button>
+
+							<button
+								type="button"
+								class="btn btn-dark"
+								data-bs-dismiss="modal"
+							>
+								Cancel
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Main Content Ends -->
+		<div class="container-fluid bg-dark text-light footer">
+			<div class="container d-flex justify-content-between py-4">
+				<div class="col-12 col-md-4 text-center text-sm-start">
+					<p class="lead">MyInternApp</p>
+					<p>About</p>
+					<p>How it works</p>
+				</div>
+				<div class="col-12 col-md-4 text-center text-sm-start">
+					<p class="lead">Post Job Ads</p>
+					<p>Find Talent</p>
+				</div>
+				<div class="col-12 col-md-4 text-center text-sm-start">
+					<p class="lead">Showcase Talent</p>
+					<p>Projects</p>
+				</div>
+			</div>
+		</div>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>
