@@ -137,24 +137,24 @@ USE_TZ = True
 
 # **************** use this for deployment ************************
 
-# STATIC_URL = '/static/'
-# MEDIA_URL = '/profile_pics/'
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-# ]
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# MEDIA_ROOT = str(BASE_DIR / "static")
-# MEDIA_ROOT = str(BASE_DIR / "backend/static/backend/profile_pics")
-# DEBUG = False
+STATIC_URL = '/static/'
+MEDIA_URL = '/profile_pics/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT = str(BASE_DIR / "static")
+MEDIA_ROOT = str(BASE_DIR / "backend/static/backend/profile_pics")
+DEBUG = False
 
 
 # ********************  Use this for production ***********************
-STATIC_URL = '/static/'
-MEDIA_URL = '/profile_pics/'
-STATICFILES_DIRS = []
-STATIC_ROOT = str(BASE_DIR / "static")
-MEDIA_ROOT = str(BASE_DIR / "backend/static/backend/profile_pics")
-DEBUG = True
+# STATIC_URL = '/static/'
+# MEDIA_URL = '/profile_pics/'
+# STATICFILES_DIRS = []
+# STATIC_ROOT = str(BASE_DIR / "static")
+# MEDIA_ROOT = str(BASE_DIR / "backend/static/backend/profile_pics")
+# DEBUG = True
 
 
 # Default primary key field type
