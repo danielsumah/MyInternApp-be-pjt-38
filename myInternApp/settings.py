@@ -151,7 +151,9 @@ USE_TZ = True
 # ********************  Use this for production ***********************
 STATIC_URL = '/static/'
 MEDIA_URL = '/profile_pics/'
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [
+    # os.path.join(BASE_DIR, 'staticfiles'),
+]
 STATIC_ROOT = str(BASE_DIR / "static")
 MEDIA_ROOT = str(BASE_DIR / "backend/static/backend/profile_pics")
 DEBUG = True
